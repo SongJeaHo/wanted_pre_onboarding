@@ -1,14 +1,24 @@
+const location = require("./location");
+
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define(
       "company",
       {
+        id: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+        },
         name: {
           type: DataTypes.STRING(20),
-          allowNull: false,
         },
         location_id: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          references: {
+                    model: location,
+                    key: "id"
+          },
         },
         created_at: {
           type: "TIMESTAMP",
