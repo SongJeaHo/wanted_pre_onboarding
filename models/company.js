@@ -1,20 +1,20 @@
-const location = require("./location");
-
-module.exports = (sequelize, DataTypes) => {
-    return sequelize.define(
-      "company",
+const Sequelize = require("sequelize");
+const location = require('./location');
+module.exports = class Company extends Sequelize.Model {
+  static init(sequelize) {
+    return super.init(
       {
         id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
         },
         name: {
-          type: DataTypes.STRING(20),
+          type: Sequelize.STRING(20),
         },
         location_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           references: {
                     model: location,
                     key: "id"
@@ -32,9 +32,11 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       {
+        sequelize,
         tableName: "company",
         timestamps: false,
       }
     );
   };
-  
+  static associate(db){}
+};

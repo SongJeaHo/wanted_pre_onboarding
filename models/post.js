@@ -1,37 +1,37 @@
-const company = require("./company");
-
-module.exports = (sequelize, DataTypes) => {
-    return sequelize.define(
-        "post",
+const Sequelize = require("sequelize");
+const company = require('./company');
+module.exports = class Post extends Sequelize.Model {
+  static init(sequelize) {
+    return super.init(
         {
-            id: {
-                type: DataTypes.INTEGER,
+          id: {
+                type: Sequelize.INTEGER,
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
             },
             name: {
-                type: DataTypes.STRING(20),
+                type: Sequelize.STRING(20),
                 allowNull: false,
             },
             company_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 references: {
                     model: company,
                     key: "id"
                   },
             },
             position: {
-                type: DataTypes.STRING(20),
+                type: Sequelize.STRING(20),
             },
             reward: {
-                type: DataTypes.DECIMAL,
+                type: Sequelize.DECIMAL,
             },
             contents: {
-                type: DataTypes.STRING(100),
+                type: Sequelize.STRING(100),
             },
             technology: {
-                type: DataTypes.STRING(20),
+                type: Sequelize.STRING(20),
             },
             created_at: {
                 type: "TIMESTAMP",
@@ -45,9 +45,11 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
         {
+            sequelize,
             tableName: "user",
             timestamps: false,
         }
-    );
+        );
+    };
+    static associate(db){}
 };
-  

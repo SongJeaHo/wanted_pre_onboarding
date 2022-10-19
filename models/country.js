@@ -1,22 +1,25 @@
-module.exports = (sequelize, DataTypes) => {
-    return sequelize.define(
-      "country",
+const Sequelize = require("sequelize");
+module.exports = class Country extends Sequelize.Model {
+  static init(sequelize) {
+    return super.init(
       {
         id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
         },
         name: {
-          type: DataTypes.STRING(20),
+          type: Sequelize.STRING(20),
           allowNull: false,
         },
       },
       {
+        sequelize,
         tableName: "country",
         timestamps: false,
       }
     );
   };
-  
+  static associate(db){}
+};

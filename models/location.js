@@ -1,23 +1,22 @@
-const country = require("./country");
-
-
-module.exports = (sequelize, DataTypes) => {
-    return sequelize.define(
-      "location",
+const Sequelize = require("sequelize");
+const country = require('./country');
+module.exports = class Location extends Sequelize.Model {
+  static init(sequelize) {
+    return super.init(
       {
         id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
         },
         name: {
-          type: DataTypes.STRING(20),
+          type: Sequelize.STRING(20),
           allowNull: false,
         },
         
         country_id: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           references: {
             model: country,
             key: "id"
@@ -25,9 +24,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       {
+        sequelize,
         tableName: "location",
         timestamps: false,
       }
     );
   };
-  
+  static associate(db){}
+};
